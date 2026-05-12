@@ -9,7 +9,7 @@
 }
 
 * {
-    margin: 0;
+   margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,6 +19,11 @@ body {
     background-color: var(--light-bg);
     color: var(--primary-color);
     line-height: 1.6;
+}
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Garante que nada saia pela lateral */
+    position: relative;
 }
 
 header {
@@ -30,26 +35,28 @@ header {
 }
 
 .container {
-    max-width: 1000px;
+   width: 95%;            /* Usa quase toda a largura em telas pequenas */
+    max-width: 1200px;     /* Aumentamos de 1000px para 1200px */
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 20px;
 }
 
 /* 1. Resumo (Flexbox) - Requisito 3.1 */
 .summary {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 2rem;
+    flex-wrap: wrap;       /* Permite quebra de linha se necessário [cite: 127] */
+    gap: 25px;             /* Mais espaço entre os quadros */
+    width: 100%;
+    margin-bottom: 30px;
 }
 
 .card {
-    background: var(--white);
-    flex: 1;
-    padding: 1.5rem;
-    border-radius: 8px;
+   background: var(--white);
+    flex: 1 1 300px;       /* Tenta manter no mínimo 300px de largura */
+    padding: 30px;         /* Aumenta o respiro interno */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .card span {
@@ -61,11 +68,9 @@ header {
 
 /* 2. Formulário */
 .form-section, .transactions-section {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+   width: 100%;           /* Ocupa toda a largura do container */
+    padding: 25px;
+    margin-bottom: 25px;
 }
 
 .input-group {
@@ -82,6 +87,10 @@ input, select {
     padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 4px;
+}
+input, select, button {
+    max-width: 100%; /* Nunca deixa o input ser maior que a tela */
+    display: block;
 }
 
 button {
@@ -108,8 +117,9 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
+    padding: 1rem 0.5rem;
+    gap: 10px; /* Garante que os textos não colem no botão */
+    word-break: break-word; /* Quebra palavras longas se necessário */
 }
 
 .revenu { color: var(--success-color); }
@@ -145,5 +155,29 @@ button {
     .file-actions {
         flex-direction: column;
         align-items: stretch;
+    }
+}
+@media (max-width: 480px) {
+    .transaction-item {
+        flex-direction: column; /* Empilha o texto e o botão */
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* Ajusta o tamanho da fonte se o valor for muito grande */
+    .card span {
+        font-size: 1.2rem;
+        word-wrap: break-word;
+    }
+    
+    /* Garante que os botões de importação caibam */
+    .file-actions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-secondary, #import-file {
+        width: 100%;
     }
 }
