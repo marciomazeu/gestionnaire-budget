@@ -91,7 +91,7 @@ document.getElementById('download-btn').addEventListener('click', () => {
     
     const link = document.createElement('a');
     link.href = url;
-    link.download = "budget.json";
+    link.download = "budget_export.json";
     link.click();
 });
 
@@ -124,16 +124,16 @@ document.getElementById('import-btn').addEventListener('click', () => {
 // Função para carregamento inicial (Requisito 5.1 - Grille de correction)
 async function loadInitialData() {
     try {
-        const response = await fetch('data.json'); // Você pode criar um arquivo data.json com []
+        const response = await fetch('data/data.json'); // Você pode criar um arquivo data.json com []
         if (response.ok) {
             const data = await response.json();
             transactions = data;
             renderTransactions();
             updateTotals();
-            console.log("Données initiales chargées com succès.");
+            console.log("Données chargées depuis data/data.json");
         }
     } catch (error) {
-        console.log("Aucune donnée initiale trouvée, démarrage à vide.");
+        console.log("Démarrage avec un budget vide (data.json non trouvé).");
         // CT-01: Ao falhar ou não existir, inicia vazio [cite: 6]
         updateTotals(); 
     }
