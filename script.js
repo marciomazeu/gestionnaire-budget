@@ -120,3 +120,24 @@ document.getElementById('import-btn').addEventListener('click', () => {
     };
     reader.readAsText(file);
 });
+
+// Função para carregamento inicial (Requisito 5.1 - Grille de correction)
+async function loadInitialData() {
+    try {
+        const response = await fetch('data.json'); // Você pode criar um arquivo data.json com []
+        if (response.ok) {
+            const data = await response.json();
+            transactions = data;
+            renderTransactions();
+            updateTotals();
+            console.log("Données initiales chargées com succès.");
+        }
+    } catch (error) {
+        console.log("Aucune donnée initiale trouvée, démarrage à vide.");
+        // CT-01: Ao falhar ou não existir, inicia vazio [cite: 6]
+        updateTotals(); 
+    }
+}
+
+// Chamar a função ao carregar a página
+window.addEventListener('DOMContentLoaded', loadInitialData);
